@@ -9,11 +9,11 @@
   ``` html
   <head>
     <!-- Vue -->
-    <script src="https://cdn.jsdelivr.net/vue/1.0.24/vue.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <!-- Firebase -->
-    <script src="https://gstatic.com/firebasejs/3.0.3/firebase.js"></script>
+    <script src="https://gstatic.com/firebasejs/3.5.2/firebase.js"></script>
     <!-- VueFire -->
-    <script src="https://cdn.jsdelivr.net/vuefire/1.1.0/vuefire.min.js"></script>
+    <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
   </head>
   ```
 
@@ -154,20 +154,20 @@ The resulting bound array stored in `vm.items` will be:
   }
 ]
 ```
-Therefore to delete or update an item: first you have to obtain a reference to the '.key' property or the item object. In your Vue instance you could add 
- ``` js
- //pass '.key' property from html
- vm.deleteItem = function(key) {
-   var ref = db.ref('items/'+key)
-   ref.remove()
- }
- //pass in item object from html
- vm.updateItem = function(item) { 
-   var key = item['.key']
-   var ref = db.ref('items/'+key)
-   ref.set(item)
+
+To delete or update an item you can use the `.key` property of a given object:
+
+``` js
+ // Vue instance methods
+ deleteItem: function (item) {
+   this.$firebaseRefs.items.child(item['.key']).remove()
+ },
+ updateItem: function (item) { 
+   this.$firebaseRefs.items.child(item['.key']).set(item)
  } 
- ```
+```
+
+You can check the full example at [examples/todo-app](examples/todo-app/index.html).
 
 ## Contributing
 
